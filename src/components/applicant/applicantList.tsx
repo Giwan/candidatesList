@@ -1,5 +1,8 @@
 import { ApplicantType } from "../../features/applicant/applicantSlice";
 import ApplicantItem from "./applicantItem";
+import { tableHeaderConstants } from "../../utils/constants";
+
+export const tableHeader = [...Object.values(tableHeaderConstants)];
 
 export type ApplicantListProps = {
     applicantList: ApplicantType[];
@@ -8,6 +11,13 @@ export type ApplicantListProps = {
 const ApplicantList = ({ applicantList }: ApplicantListProps) => {
     return (
         <table>
+            <thead>
+                <tr>
+                    {tableHeader.map((header) => (
+                        <th>{header}</th>
+                    ))}
+                </tr>
+            </thead>
             <tbody>
                 {applicantList.map((applicant, index) => (
                     <ApplicantItem
