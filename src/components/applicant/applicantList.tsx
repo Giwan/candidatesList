@@ -1,14 +1,23 @@
-import { useEffect } from "react";
-import { useAppDispatch } from "../../hooks/hooks";
-import { fetchApplicantList } from "../../controller/applicantController";
+import { ApplicantType } from "../../features/applicant/applicantSlice";
+import ApplicantItem from "./applicantItem";
 
-const ApplicantList = () => {
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(fetchApplicantList());
-    }, [dispatch]);
+export type ApplicantListProps = {
+    applicantList: ApplicantType[];
+};
 
-    return <h1>application list</h1>;
+const ApplicantList = ({ applicantList }: ApplicantListProps) => {
+    return (
+        <table>
+            <tbody>
+                {applicantList.map((applicant, index) => (
+                    <ApplicantItem
+                        key={applicant.email}
+                        {...{ applicant, index }}
+                    />
+                ))}
+            </tbody>
+        </table>
+    );
 };
 
 export default ApplicantList;

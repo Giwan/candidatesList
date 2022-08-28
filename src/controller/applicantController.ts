@@ -23,7 +23,7 @@ export const networkFetchApplicantList = async function (handleError: Function, 
     }
 }
 
-export const fetchApplicantList = ({ force = false } = {}) => function (dispatch: Function, getState: Function) {
+export const fetchApplicantList = ({ force = false } = {}) => async function (dispatch: Function, getState: Function) {
 
     const { applicantsList, isLoading } = getState().applicantReducer;
     if (((applicantsList && applicantsList.length > 0) || isLoading) && !force) return;
@@ -38,8 +38,13 @@ export const fetchApplicantList = ({ force = false } = {}) => function (dispatch
     }));
 
     const clearLoading = () => dispatch(setIsLoading(false));
+    dispatch(setApplicantList(await networkFetchApplicantList(handleError, clearLoading)));
+}
 
-    dispatch(setApplicantList(networkFetchApplicantList(handleError, clearLoading)));
-
-
+export const calculateAge = (dob: string) => {
+    const _dob = new Date(dob);
+    const monthDiff = Date.now() - _dob.getTime();
+    const ageDiff = new Date(monthDiff);
+    const year = ageDiff.getFullYear();
+    return Math.abs(year - 1970);
 }

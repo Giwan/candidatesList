@@ -40,7 +40,7 @@ export const applicantSlice = createSlice({
     initialState,
     reducers: {
         setApplicantList(state, { payload }) {
-            state.applicantList = payload.data;
+            state.applicantList = payload.candidates;
             state.error = undefined;
         },
         setNameFilter(state, { payload }) {
@@ -84,5 +84,5 @@ export const {
 
 export default applicantSlice.reducer;
 
-export const applicantListSelector = (state: RootState) => state?.applicantReducer?.applicantList;
+export const applicantListSelector = (state: RootState) => state?.applicantReducer?.applicantList || [];
 export const errorSelector = (state: RootState) => state?.applicantReducer?.error;
