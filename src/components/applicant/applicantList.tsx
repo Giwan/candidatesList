@@ -9,6 +9,8 @@ export type ApplicantListProps = {
 };
 
 const ApplicantList = ({ applicantList }: ApplicantListProps) => {
+    if (!applicantList || applicantList.length < 1) return null;
+
     return (
         <table>
             <thead>
