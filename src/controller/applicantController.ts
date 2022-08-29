@@ -1,5 +1,8 @@
 import { setApplicantList, setError, setIsLoading } from "../features/applicant/applicantSlice";
 import api from "../api/api";
+import { tableHeaderConstants, tableHeaderConstantsType } from "../utils/constants";
+
+
 
 export const networkFetchApplicantList = async function (handleError: Function, clearLoading: Function) {
     try {
@@ -47,4 +50,11 @@ export const calculateAge = (dob: string) => {
     const ageDiff = new Date(monthDiff);
     const year = ageDiff.getFullYear();
     return Math.abs(year - 1970);
+}
+
+export const convertSortValueTokey = (value: string) => {
+    for (const key in tableHeaderConstants) {
+        if (tableHeaderConstants[key as keyof tableHeaderConstantsType] === value) return key;
+    }
+    return value;
 }

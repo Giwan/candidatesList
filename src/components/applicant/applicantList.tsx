@@ -1,14 +1,15 @@
 import { ApplicantType } from "../../features/applicant/applicantSlice";
-import ApplicantItem from "./applicantItem";
+import ApplicantItem from "./ApplicantItem";
 import { tableHeaderConstants } from "../../utils/constants";
 
 export const tableHeader = [...Object.values(tableHeaderConstants)];
 
 export type ApplicantListProps = {
     applicantList: ApplicantType[];
+    handleClick: Function;
 };
 
-const ApplicantList = ({ applicantList }: ApplicantListProps) => {
+const ApplicantList = ({ applicantList, handleClick }: ApplicantListProps) => {
     if (!applicantList || applicantList.length < 1) return null;
 
     return (
@@ -16,7 +17,7 @@ const ApplicantList = ({ applicantList }: ApplicantListProps) => {
             <thead>
                 <tr>
                     {tableHeader.map((header) => (
-                        <th>{header}</th>
+                        <th onClick={handleClick(header)}>{header}</th>
                     ))}
                 </tr>
             </thead>
