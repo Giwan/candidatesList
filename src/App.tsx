@@ -20,6 +20,11 @@ const toggleSortDirection = (function () {
     return () => String((_direction = !_direction));
 })();
 
+const convertSortDirection = (val: string | undefined | null): boolean =>
+    Boolean(!val || val === "false");
+
+const convertSortKey = (val: unknown): string => (!val ? "" : String(val));
+
 function App() {
     const dispatch = useAppDispatch();
     const candidates = useAppSelector(applicantListSelector);
@@ -45,7 +50,16 @@ function App() {
     return (
         <div className={styles.appContainer}>
             <Header />
-            <ApplicantList {...{ applicantList: candidates, handleClick }} />
+            <ApplicantList
+                {...{
+                    applicantList: candidates,
+                    handleClick,
+                    sortKey: convertSortKey(searchParams.get("sort")),
+                    sortDirection: convertSortDirection(
+                        searchParams.get("sortDirection")
+                    ),
+                }}
+            />
         </div>
     );
 }

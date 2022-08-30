@@ -1,30 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-
-export type ErrorType = {
-    title: string;
-    error: object
-}
-
-export type ApplicantType = {
-    id: number;
-    name: string;
-    email: string;
-    birth_date: string;
-    year_of_experience: number;
-    position_applied: string;
-    application_date: string;
-    status: "approved" | "rejected" | "waiting";
-}
-
-type InitialStateType = {
-    applicantList: ApplicantType[] | undefined;
-    nameFilter: string | undefined;
-    statusFilter: string | undefined;
-    positionFilter: string | undefined;
-    isLoading: boolean;
-    error: ErrorType | undefined
-}
+import { InitialStateType } from '../../types/types';
 
 const initialState: InitialStateType = {
     applicantList: undefined,

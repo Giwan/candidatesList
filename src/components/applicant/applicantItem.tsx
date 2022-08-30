@@ -1,4 +1,4 @@
-import { ApplicantType } from "../../features/applicant/applicantSlice";
+import { ApplicantType } from "../../types/types";
 import { calculateAge } from "../../controller/applicantController";
 
 type ApplicantListItem = {

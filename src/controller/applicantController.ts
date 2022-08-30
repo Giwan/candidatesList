@@ -1,6 +1,7 @@
 import { setApplicantList, setError, setIsLoading } from "../features/applicant/applicantSlice";
 import api from "../api/api";
-import { tableHeaderConstants, tableHeaderConstantsType } from "../utils/constants";
+import { tableHeaderConstants, } from "../utils/constants";
+import { tableHeaderConstantsType } from "../types/types";
 
 
 
