@@ -10,6 +10,12 @@ export const sortYears = (direction: boolean) => (a: ApplicantType, b: Applicant
         : a.experience > b.experience ? -1 : 1
 };
 
+export const sortPositionLogic = (direction: boolean, pa: string, pb: string) => pa === pb
+    ? 0
+    : pa < pb
+        ? direction ? 1 : -1
+        : direction ? -1 : 1;
+
 /**
  * Sort the list based on the position they applied for
  */
@@ -17,10 +23,7 @@ export const sortPosition = (direction: boolean) => (a: ApplicantType, b: Applic
     const pa = a.position.toLowerCase();
     const pb = b.position.toLowerCase();
 
-    return pa === pb
-        ? 0
-        : direction ? pa < pb ? -1 : 1
-            : 1
+    return sortPositionLogic(direction, pa, pb);
 }
 
 /**
