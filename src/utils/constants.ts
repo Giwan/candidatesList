@@ -6,12 +6,12 @@ export const tableHeaderConstants = {
     age: "Age",
     experience: "Experience",
     positionApplied: "Position applied",
-    applicationDate: "Date of application",
+    dateOfApplication: "Date of application",
     status: "status of application",
 }
 
 export const sortHeaders = [
     tableHeaderConstants.positionApplied,
-    tableHeaderConstants.applicationDate,
+    tableHeaderConstants.dateOfApplication,
     tableHeaderConstants.experience
 ];

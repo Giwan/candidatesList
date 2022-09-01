@@ -10,7 +10,7 @@ export type ApplicantType = {
     birthDate: string;
     experience: number;
     position: string;
-    applicationDate: string;
+    dateOfApplication: string;
     status: "approved" | "rejected" | "waiting";
 }
 
@@ -30,6 +30,6 @@ export type tableHeaderConstantsType = {
     age: string;
     experience: number;
     positionApplied: string;
-    applicationDate: string;
+    dateOfApplication: string;
     status: string;
 }

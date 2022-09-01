@@ -26,13 +26,20 @@ export const sortPosition = (direction: boolean) => (a: ApplicantType, b: Applic
     return sortPositionLogic(direction, pa, pb);
 }
 
+export const _sortDate = (dir: boolean) => (d1: string, d2: string) => {
+    const _d1 = +new Date(d1), _d2 = +new Date(d2);
+    return _d1 === _d2
+        ? 0 : _d1 > _d2
+            ? dir ? 1 : -1
+            : dir ? -1 : 1;
+}
+
 /**
  * Sort list based on the application date. 
  */
-export const sortDate = (direction: boolean) => (a: ApplicantType, b: ApplicantType): number =>
-    direction
-        ? +new Date(a.applicationDate) - +new Date(b.applicationDate)
-        : +new Date(b.applicationDate) - +new Date(a.applicationDate)
+export const sortDate = (direction: boolean) =>
+    (a: ApplicantType, b: ApplicantType): number =>
+        _sortDate(direction)(a.dateOfApplication, b.dateOfApplication)
 
 /**
  * A reference used by the sort method 
@@ -42,7 +49,7 @@ export const sortDate = (direction: boolean) => (a: ApplicantType, b: ApplicantT
 const sortFnReference = {
     [tableHeaderConstants.experience]: sortYears,
     [tableHeaderConstants.positionApplied]: sortPosition,
-    [tableHeaderConstants.applicationDate]: sortDate,
+    [tableHeaderConstants.dateOfApplication]: sortDate,
 }
 
 /**
