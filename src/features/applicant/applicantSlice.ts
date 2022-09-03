@@ -60,5 +60,16 @@ export const {
 
 export default applicantSlice.reducer;
 
-export const applicantListSelector = (state: RootState) => state?.applicantReducer?.applicantList || [];
+export const applicantListSelector = (searchParams: URLSearchParams) => (state: RootState) => {
+    let applicantList = state?.applicantReducer?.applicantList || [];
+    const nameFilter = searchParams.get("nameFilter");
+    if (nameFilter) {
+        applicantList = applicantList.filter(({ firstName, lastName }) => {
+            const _re = new RegExp(nameFilter, "i");
+            return _re.test(firstName) || _re.test(lastName);
+        })
+    }
+
+    return applicantList;
+}
 export const errorSelector = (state: RootState) => state?.applicantReducer?.error;

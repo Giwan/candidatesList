@@ -5,7 +5,8 @@ export type ErrorType = {
 
 export type ApplicantType = {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     birthDate: string;
     experience: number;

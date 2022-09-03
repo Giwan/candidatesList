@@ -27,9 +27,9 @@ const convertSortKey = (val: unknown): string => (!val ? "" : String(val));
 
 function App() {
     const dispatch = useAppDispatch();
-    const candidates = useAppSelector(applicantListSelector);
-
     const [searchParams, setSearchParam] = useSearchParams();
+
+    const candidates = useAppSelector(applicantListSelector(searchParams));
 
     useEffect(() => {
         dispatch(fetchApplicantList());
