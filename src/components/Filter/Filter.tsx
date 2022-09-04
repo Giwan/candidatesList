@@ -32,7 +32,9 @@ const Filter = () => {
                 onChange={updateFilter(setNameFilter)}
             />
             <button type="submit">Apply filter</button>
-            <a onClick={clearFilter}>Clear filter</a>
+            <button type="reset" onClick={clearFilter}>
+                Clear filters
+            </button>
         </form>
     );
 };
