@@ -12,7 +12,7 @@ export type ApplicantType = {
     experience: number;
     position: string;
     dateOfApplication: string;
-    status: "approved" | "rejected" | "waiting";
+    statusOfApplication: "approved" | "rejected" | "waiting";
 }
 
 type InitialStateType = {

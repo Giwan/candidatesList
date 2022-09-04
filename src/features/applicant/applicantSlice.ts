@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { InitialStateType } from '../../types/types';
+import { ApplicantType } from '../../types/types';
 
 const initialState: InitialStateType = {
     applicantList: undefined,
@@ -63,13 +64,28 @@ export default applicantSlice.reducer;
 export const applicantListSelector = (searchParams: URLSearchParams) => (state: RootState) => {
     let applicantList = state?.applicantReducer?.applicantList || [];
     const nameFilter = searchParams.get("nameFilter");
-    if (nameFilter) {
-        applicantList = applicantList.filter(({ firstName, lastName }) => {
-            const _re = new RegExp(nameFilter, "i");
-            return _re.test(firstName) || _re.test(lastName);
-        })
-    }
+    const statusFilter = searchParams.get("statusFilter");
+
+    applicantList = filterByName(applicantList, nameFilter);
+    applicantList = filterByStatus(applicantList, statusFilter);
 
     return applicantList;
 }
 export const errorSelector = (state: RootState) => state?.applicantReducer?.error;
+
+export const filterByName = (list: ApplicantType[], nameFilter: string | null) => {
+    if (!nameFilter) return list;
+
+    return list.filter(({ firstName, lastName }) => {
+        const _re = new RegExp(nameFilter, "i");
+        return _re.test(firstName) || _re.test(lastName);
+    });
+}
+
+export const filterByStatus = (list: ApplicantType[], statusFilter: string | null) => {
+    if (!statusFilter || list.length < 1) return list;
+
+    return list.filter(({ statusOfApplication }) => {
+        return statusOfApplication.match(new RegExp(statusFilter, "i"));
+    });
+}
