@@ -1,6 +1,8 @@
 import { useState, FormEventHandler, ChangeEvent } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import StatusFilter from "./StatusFilter";
+import SelectFilter from "./SelectFilter";
+
+const statusFilterOptionsList = ["Approved", "Reject", "Waiting"];
 
 const Filter = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -10,7 +12,7 @@ const Filter = () => {
         searchParams.get("name") || ""
     );
 
-    const [statusFilter, setStatusFilter] = useState(
+    const [statusFilterValue, setStatusFilter] = useState(
         searchParams.get("status") || ""
     );
 
@@ -20,13 +22,11 @@ const Filter = () => {
         (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
             fn(e?.target?.value);
 
-    // const updateFilterSelection = (fn: Function) => (e: ChangeEvent<HTMLInputElement>)
-
     const applyFilters: FormEventHandler = (e) => {
         e.preventDefault();
         setSearchParams({
-            nameFilter,
-            statusFilter,
+            name: nameFilter,
+            status: statusFilterValue,
         });
     };
 
@@ -42,10 +42,13 @@ const Filter = () => {
                 value={nameFilter}
                 onChange={updateFilter(setNameFilter)}
             />
-            <StatusFilter
+            <SelectFilter
                 {...{
-                    handleStatusFilter: updateFilter(setStatusFilter),
-                    statusFilter,
+                    filterAction: updateFilter(setStatusFilter),
+                    statusFilterName: "statusFilter",
+                    statusFilterValue,
+                    optionsList: statusFilterOptionsList,
+                    title: "Status",
                 }}
             />
             <button type="submit">Apply filter</button>
