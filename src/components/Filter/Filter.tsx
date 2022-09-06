@@ -1,7 +1,10 @@
 import { useState, FormEventHandler, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { positionOptionsSelector } from "../../features/applicant/applicantSlice";
+import {
+    clearFilters,
+    positionOptionsSelector,
+} from "../../features/applicant/applicantSlice";
 import { useAppDispatch } from "../../hooks/hooks";
 import SelectFilter from "./SelectFilter";
 import { filterApplicants } from "../../controller/applicantController";
@@ -46,6 +49,14 @@ const Filter = () => {
 
     const clearFilter = () => {
         setNameFilter("");
+        setPositionFilter("");
+        setStatusFilter("");
+        setSearchParams({
+            name: "",
+            position: "",
+            status: "",
+        });
+        dispatch(clearFilters());
         navigate("/");
     };
     return (

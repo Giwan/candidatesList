@@ -46,7 +46,7 @@ export const applicantSlice = createSlice({
             state.nameFilter = undefined;
             state.statusFilter = undefined;
             state.positionFilter = undefined;
-            state.applicantFilteredList = state.applicantList;
+            state.applicantFilteredList = undefined;
         },
         setIsLoading(state, { payload }) {
             state.isLoading = Boolean(payload)
