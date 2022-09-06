@@ -7,7 +7,7 @@ import {
     fetchApplicantList,
     convertSortValueTokey,
 } from "./controller/applicantController";
-import { applicantListSelector } from "./features/applicant/applicantSlice";
+import { applicantFilteredListSelector } from "./features/applicant/applicantSlice";
 import { sortHeaders } from "./utils/constants";
 import { useSearchParams } from "react-router-dom";
 
@@ -29,7 +29,7 @@ function App() {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParam] = useSearchParams();
 
-    const candidates = useAppSelector(applicantListSelector(searchParams));
+    const candidates = useAppSelector(applicantFilteredListSelector);
 
     useEffect(() => {
         dispatch(fetchApplicantList());

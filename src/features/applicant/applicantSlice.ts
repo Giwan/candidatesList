@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getPositionOptions } from '../../controller/applicantController';
 import { RootState } from '../../store/store';
 import { InitialStateType } from '../../types/types';
-import { ApplicantType } from '../../types/types';
 
 const initialState: InitialStateType = {
     applicantList: undefined,
+    applicantFilteredList: undefined,
+    positionOptions: undefined,
     nameFilter: undefined,
     statusFilter: undefined,
     positionFilter: undefined,
@@ -19,6 +21,10 @@ export const applicantSlice = createSlice({
         setApplicantList(state, { payload }) {
             state.applicantList = payload.candidates;
             state.error = undefined;
+        },
+        setFilteredList(state, { payload }) {
+            state.applicantFilteredList = payload;
+            state.positionOptions = getPositionOptions(payload);
         },
         setNameFilter(state, { payload }) {
             /all/i.test(payload)
@@ -39,6 +45,7 @@ export const applicantSlice = createSlice({
             state.nameFilter = undefined;
             state.statusFilter = undefined;
             state.positionFilter = undefined;
+            state.applicantFilteredList = state.applicantList;
         },
         setIsLoading(state, { payload }) {
             state.isLoading = Boolean(payload)
@@ -51,6 +58,7 @@ export const applicantSlice = createSlice({
 
 export const {
     setApplicantList,
+    setFilteredList,
     setNameFilter,
     setStatusFilter,
     setPositionFilter,
@@ -61,39 +69,12 @@ export const {
 
 export default applicantSlice.reducer;
 
-export const applicantListSelector = (searchParams: URLSearchParams) => (state: RootState) => {
-    let applicantList = state?.applicantReducer?.applicantList || [];
-    const nameFilter = searchParams.get("name");
-    const statusFilter = searchParams.get("status");
-    const positionFilter = searchParams.get("position");
-
-    applicantList = filterByName(applicantList, nameFilter);
-    applicantList = filterByPosition(applicantList, positionFilter);
-    applicantList = filterByStatus(applicantList, statusFilter);
-
-    return applicantList;
+export const applicantListSelector = (state: RootState) => {
+    return state?.applicantReducer?.applicantList || [];
+}
+export const applicantFilteredListSelector = (state: RootState) => {
+    return state?.applicantReducer?.applicantFilteredList || [];
 }
 export const errorSelector = (state: RootState) => state?.applicantReducer?.error;
 
-export const filterByName = (list: ApplicantType[], nameFilter: string | null) => {
-    if (!nameFilter) return list;
-
-    return list.filter(({ firstName, lastName }) => {
-        const _re = new RegExp(nameFilter, "i");
-        return _re.test(firstName) || _re.test(lastName);
-    });
-}
-
-export const filterByStatus = (list: ApplicantType[], statusFilter: string | null) => {
-    if (!statusFilter || list.length < 1 || /all/i.test(statusFilter)) return list;
-
-    return list.filter(({ statusOfApplication }) => {
-        return statusOfApplication.match(new RegExp(statusFilter, "i"));
-    });
-}
-
-export const filterByPosition = (list: ApplicantType[], positionFilter: string | null) => {
-    if (!positionFilter || list.length < 1) return list;
-
-    return list.filter(({ position }) => position.match(new RegExp(positionFilter, "i")))
-}
+export const positionOptionsSelector = (state: RootState) => state?.applicantReducer?.positionOptions || [];

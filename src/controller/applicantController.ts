@@ -1,8 +1,8 @@
 import { setApplicantList, setError, setIsLoading } from "../features/applicant/applicantSlice";
 import api from "../api/api";
 import { tableHeaderConstants, } from "../utils/constants";
-import { tableHeaderConstantsType } from "../types/types";
-
+import { tableHeaderConstantsType, ApplicantType } from "../types/types";
+import { setFilteredList } from "../features/applicant/applicantSlice";
 
 
 export const networkFetchApplicantList = async function (handleError: Function, clearLoading: Function) {
@@ -45,6 +45,44 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
     dispatch(setApplicantList(await networkFetchApplicantList(handleError, clearLoading)));
 }
 
+export const filterApplicants = (searchParams: URLSearchParams) => (dispatch: Function, getState: Function) => {
+    let applicantList = getState().applicantReducer.applicantList;
+    const nameFilter = searchParams.get("name");
+    const statusFilter = searchParams.get("status");
+    const positionFilter = searchParams.get("position");
+
+    applicantList = filterByName(applicantList, nameFilter);
+    applicantList = filterByPosition(applicantList, positionFilter);
+    applicantList = filterByStatus(applicantList, statusFilter);
+
+    dispatch(setFilteredList(applicantList));
+}
+
+export const filterByName = (list: ApplicantType[], nameFilter: string | null) => {
+    if (!nameFilter) return list;
+
+    return list.filter(({ firstName, lastName }) => {
+        const _re = new RegExp(nameFilter, "i");
+        return _re.test(firstName) || _re.test(lastName);
+    });
+}
+
+export const filterByStatus = (list: ApplicantType[], statusFilter: string | null) => {
+    if (!statusFilter || list.length < 1 || /all/i.test(statusFilter)) return list;
+
+    return list.filter(({ statusOfApplication }) => {
+        return statusOfApplication.match(new RegExp(statusFilter, "i"));
+    });
+}
+
+export const filterByPosition = (list: ApplicantType[], positionFilter: string | null) => {
+    if (!positionFilter || list.length < 1) return list;
+
+    return list.filter(({ position }) => position.match(new RegExp(positionFilter, "i")))
+}
+
+// -----
+
 export const calculateAge = (dob: string) => {
     const _dob = new Date(dob);
     const monthDiff = Date.now() - _dob.getTime();
@@ -58,4 +96,17 @@ export const convertSortValueTokey = (value: string) => {
         if (tableHeaderConstants[key as keyof tableHeaderConstantsType] === value) return key;
     }
     return value;
+}
+
+export const getPositionOptions = (list: ApplicantType[]) => {
+    // return list.reduce((previous, current) => {
+    //     previous.add(String(current.position));
+    //     return previous;
+    // }, new Set())
+
+    return list.reduce((previous, current) => {
+        if (!previous.includes(current.position)) previous.push(current.position);
+        return previous;
+
+    }, <string[]>[])
 }

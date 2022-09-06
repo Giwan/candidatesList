@@ -17,6 +17,8 @@ export type ApplicantType = {
 
 type InitialStateType = {
     applicantList: ApplicantType[] | undefined;
+    applicantFilteredList: ApplicantType[] | undefined;
+    positionOptions: string[] | undefined;
     nameFilter: string | undefined;
     statusFilter: string | undefined;
     positionFilter: string | undefined;
