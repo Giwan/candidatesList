@@ -1,7 +1,7 @@
 import { setApplicantList, setError, setIsLoading } from "../features/applicant/applicantSlice";
 import api from "../api/api";
 import { tableHeaderConstants, } from "../utils/constants";
-import { tableHeaderConstantsType, ApplicantType } from "../types/types";
+import { tableHeaderConstantsType, ApplicantType, FiltersType } from "../types/types";
 import { setFilteredList } from "../features/applicant/applicantSlice";
 
 
@@ -45,11 +45,11 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
     dispatch(setApplicantList(await networkFetchApplicantList(handleError, clearLoading)));
 }
 
-export const filterApplicants = (searchParams: URLSearchParams) => (dispatch: Function, getState: Function) => {
+export const filterApplicants = (searchParams: URLSearchParams, filters: FiltersType) => (dispatch: Function, getState: Function) => {
     let applicantList = getState().applicantReducer.applicantList;
-    const nameFilter = searchParams.get("name");
-    const statusFilter = searchParams.get("status");
-    const positionFilter = searchParams.get("position");
+    const nameFilter = filters.name || searchParams.get("name");
+    const statusFilter = filters.status || searchParams.get("status");
+    const positionFilter = filters.position || searchParams.get("position");
 
     applicantList = filterByName(applicantList, nameFilter);
     applicantList = filterByPosition(applicantList, positionFilter);
@@ -108,5 +108,5 @@ export const getPositionOptions = (list: ApplicantType[]) => {
         if (!previous.includes(current.position)) previous.push(current.position);
         return previous;
 
-    }, <string[]>[])
+    }, [] as string[])
 }

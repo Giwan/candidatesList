@@ -36,3 +36,9 @@ export type tableHeaderConstantsType = {
     dateOfApplication: string;
     status: string;
 }
+
+export type FiltersType = {
+    name: string;
+    position: string;
+    status: string;
+}

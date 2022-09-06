@@ -21,6 +21,7 @@ export const applicantSlice = createSlice({
         setApplicantList(state, { payload }) {
             state.applicantList = payload.candidates;
             state.error = undefined;
+            state.positionOptions = getPositionOptions(payload.candidates);
         },
         setFilteredList(state, { payload }) {
             state.applicantFilteredList = payload;
@@ -73,7 +74,9 @@ export const applicantListSelector = (state: RootState) => {
     return state?.applicantReducer?.applicantList || [];
 }
 export const applicantFilteredListSelector = (state: RootState) => {
-    return state?.applicantReducer?.applicantFilteredList || [];
+    return state?.applicantReducer?.applicantFilteredList
+        || state?.applicantReducer?.applicantList
+        || [];
 }
 export const errorSelector = (state: RootState) => state?.applicantReducer?.error;
 

@@ -35,12 +35,13 @@ const Filter = () => {
 
     const applyFilters: FormEventHandler = (e) => {
         e.preventDefault();
-        setSearchParams({
+        const filters = {
             name: nameFilter,
             position: positionFilterValue,
             status: statusFilterValue,
-        });
-        dispatch(filterApplicants(searchParams));
+        };
+        setSearchParams(filters);
+        dispatch(filterApplicants(searchParams, filters));
     };
 
     const clearFilter = () => {
