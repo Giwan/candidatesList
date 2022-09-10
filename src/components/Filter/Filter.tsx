@@ -8,6 +8,7 @@ import {
 import { useAppDispatch } from "../../hooks/hooks";
 import SelectFilter from "./SelectFilter";
 import { filterApplicants } from "../../controller/applicantController";
+import styles from "./Filter.module.css";
 
 const statusFilterOptionsList = ["Approved", "Reject", "Waiting"];
 
@@ -60,13 +61,17 @@ const Filter = () => {
         navigate("/");
     };
     return (
-        <form onSubmit={applyFilters}>
-            <input
-                type="text"
-                name="nameFilter"
-                value={nameFilter}
-                onChange={updateFilter(setNameFilter)}
-            />
+        <form onSubmit={applyFilters} className={styles.filterContainer}>
+            <label htmlFor="nameFilter">
+                <span className={styles.filterLabel}>Filter name</span>
+                <input
+                    type="text"
+                    id="nameFilter"
+                    name="nameFilter"
+                    value={nameFilter}
+                    onChange={updateFilter(setNameFilter)}
+                />
+            </label>
             <SelectFilter
                 {...{
                     filterAction: updateFilter(setPositionFilter),

@@ -1,5 +1,6 @@
 import { ApplicantType } from "../../types/types";
 import { calculateAge } from "../../controller/applicantController";
+import styles from "./ApplicantList.module.css";
 
 type ApplicantListItem = {
     applicant: ApplicantType;
@@ -17,7 +18,7 @@ export const generateKey = (key: string, applicant: ApplicantType) =>
 const ApplicantItem = ({ applicant }: ApplicantListItem) => {
     const keys = Object.keys(applicant);
     return (
-        <tr>
+        <tr className={styles.applicantTableRow}>
             {keys.map((key: string) => (
                 <td key={generateKey(key, applicant)}>
                     {getApplicantForKey(key, applicant)}

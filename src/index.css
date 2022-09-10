@@ -9,6 +9,9 @@
     --color-accent: orange;
     --color-divider: #aaaaaa;
     --color-background-light: #dddddd;
+
+    --font-size-medium-large: 1.1rem;
+    --font-size-large: 1.2rem;
 }
 
 * {

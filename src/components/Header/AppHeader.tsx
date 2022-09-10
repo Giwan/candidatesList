@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => (
     <header className={styles.headerContainer}>
-        <h1>
+        <h1 className={styles.title}>
             <Link to="/">Applicants</Link>
         </h1>
         <Filter />

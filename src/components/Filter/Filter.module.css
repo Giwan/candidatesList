@@ -1,0 +1,56 @@
+.filterContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: var(--unit);
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.filterContainer label {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-background-dark);
+    padding: var(--unit-sm);
+    border-radius: 1px;
+}
+
+.filterContainer label span {
+    color: var(--color-primary-light);
+}
+
+.filterContainer input,
+.filterContainer select {
+    margin: var(--unit-sm) 0;
+    background-color: var(--color-background-dark);
+    border: 0;
+    border-bottom: 1px solid var(--color-primary-light);
+    outline: none;
+    color: var(--color-primary-light);
+}
+
+.filterContainer label:focus-within,
+.filterContainer button:focus {
+    background-color: var(--color-accent);
+    color: var(--color-primary-dark);
+    outline: none;
+}
+
+.filterContainer label:focus-within span {
+    color: var(--color-primary-dark);
+}
+
+.filterContainer input:focus,
+.filterContainer select:focus {
+    color: var(--color-primary-dark);
+    border-bottom-color: var(--color-primary-dark);
+}
+
+.filterContainer button {
+    height: 100%;
+    background-color: var(--color-primary-dark);
+    color: var(--color-primary-light);
+    font-size: var(--font-size-medium-large);
+    border: 0;
+    border-radius: 1px;
+}

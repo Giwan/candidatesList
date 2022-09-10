@@ -1,5 +1,15 @@
 .headerContainer {
     display: flex;
     justify-content: space-between;
-    padding: var(--unit);
+    align-items: center;
+    padding: var(--unit) 0;
+}
+
+.title {
+    margin: 0;
+    margin-right: var(--unit);
+}
+
+.title a {
+    color: var(--color-accent);
 }

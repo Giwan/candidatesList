@@ -2,6 +2,7 @@ import { ApplicantType } from "../../types/types";
 import ApplicantItem from "./ApplicantItem";
 import { tableHeaderConstants } from "../../utils/constants";
 import { sortApplicants } from "../../controller/sortController";
+import styles from "./ApplicantList.module.css";
 
 export const tableHeader = [...Object.values(tableHeaderConstants)];
 
@@ -27,9 +28,9 @@ const ApplicantList = ({
     );
 
     return (
-        <table>
+        <table className={styles.applicantTable}>
             <thead>
-                <tr>
+                <tr className={styles.applicantTableRow}>
                     {tableHeader.map((header) => (
                         <th key={header} onClick={handleClick(header)}>
                             {header}
@@ -37,7 +38,7 @@ const ApplicantList = ({
                     ))}
                 </tr>
             </thead>
-            <tbody>
+            <tbody className={styles.tbody}>
                 {_sortedApplicants.map((applicant, index) => (
                     <ApplicantItem
                         key={applicant.email}
