@@ -1,7 +1,11 @@
 import { ApplicantType } from "../../types/types";
 import ApplicantItem from "./ApplicantItem";
 import { tableHeaderConstants } from "../../utils/constants";
-import { sortApplicants } from "../../controller/sortController";
+import {
+    sortApplicants,
+    identifySortKey,
+    canSort,
+} from "../../controller/sortController";
 import styles from "./ApplicantList.module.css";
 
 export const tableHeader = [...Object.values(tableHeaderConstants)];
@@ -32,7 +36,12 @@ const ApplicantList = ({
             <thead>
                 <tr className={styles.applicantTableRow}>
                     {tableHeader.map((header) => (
-                        <th key={header} onClick={handleClick(header)}>
+                        <th
+                            key={header}
+                            onClick={handleClick(header)}
+                            data-can-sort={canSort(header)}
+                            data-is-sort={identifySortKey(sortKey, header)}
+                        >
                             {header}
                         </th>
                     ))}

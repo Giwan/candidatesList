@@ -22,6 +22,16 @@
     font-size: var(--font-size-large);
     margin-bottom: var(--unit);
     overflow: hidden;
+    word-wrap: break-word;
+    font-weight: normal;
+}
+
+.applicantTableRow th[data-can-sort="true"] {
+    font-weight: bold;
+    cursor: pointer;
+}
+.applicantTableRow th[data-is-sort="true"] {
+    color: var(--color-accent);
 }
 
 .applicantTableRow td {

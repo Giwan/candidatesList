@@ -1,5 +1,6 @@
 import { ApplicantType, tableHeaderConstantsType } from "../types/types";
-import { tableHeaderConstants } from "../utils/constants";
+import { sortHeaders, tableHeaderConstants } from "../utils/constants";
+import { convertSortValueTokey } from "./applicantController";
 
 /**
  * Sort the list based on the years of experience
@@ -65,3 +66,6 @@ export const sortApplicants = (key: string | undefined | null, list: ApplicantTy
     const ref = tableHeaderConstants[key as keyof tableHeaderConstantsType];
     return [...list].sort(sortFnReference[ref](sortDirection));
 }
+
+export const identifySortKey = (sortKey: string, header: string) => sortKey && new RegExp(sortKey, "i").test(convertSortValueTokey(header));
+export const canSort = (header: string) => sortHeaders.includes(header);

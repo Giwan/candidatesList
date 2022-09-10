@@ -90,7 +90,7 @@ const Filter = () => {
                     title: "Status",
                 }}
             />
-            <button type="submit">Apply filter</button>
+            <button type="submit">Apply filters</button>
             <button type="reset" onClick={clearFilter}>
                 Clear filters
             </button>
