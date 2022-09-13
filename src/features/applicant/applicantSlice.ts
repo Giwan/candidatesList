@@ -19,9 +19,9 @@ export const applicantSlice = createSlice({
     initialState,
     reducers: {
         setApplicantList(state, { payload }) {
-            state.applicantList = payload.candidates;
+            state.applicantList = payload;
             state.error = undefined;
-            state.positionOptions = getPositionOptions(payload.candidates);
+            state.positionOptions = getPositionOptions(payload);
         },
         setFilteredList(state, { payload }) {
             state.applicantFilteredList = payload;

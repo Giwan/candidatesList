@@ -27,6 +27,9 @@ export const networkFetchApplicantList = async function (handleError: Function, 
     }
 }
 
+/**
+ * Redux action that fetches the list of applicants.
+ */
 export const fetchApplicantList = ({ force = false } = {}) => async function (dispatch: Function, getState: Function) {
 
     const { applicantsList, isLoading } = getState().applicantReducer;
@@ -42,7 +45,12 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
     }));
 
     const clearLoading = () => dispatch(setIsLoading(false));
-    dispatch(setApplicantList(await networkFetchApplicantList(handleError, clearLoading)));
+    const list = await networkFetchApplicantList(handleError, clearLoading);
+    const updatedList = list.map((item: ApplicantType) => ({
+        ...item,
+        birthDate: calculateAge(item.birthDate)
+    }))
+    dispatch(setApplicantList(updatedList));
 }
 
 export const filterApplicants = (searchParams: URLSearchParams, filters: FiltersType) => (dispatch: Function, getState: Function) => {
@@ -83,12 +91,13 @@ export const filterByPosition = (list: ApplicantType[], positionFilter: string |
 
 // -----
 
+export const _calculateAge = (currentDate: number, dob: string) => {
+    const monthDiff = currentDate - new Date(dob).getTime();
+    return new Date(monthDiff).getFullYear() - 1970;
+}
+
 export const calculateAge = (dob: string) => {
-    const _dob = new Date(dob);
-    const monthDiff = Date.now() - _dob.getTime();
-    const ageDiff = new Date(monthDiff);
-    const year = ageDiff.getFullYear();
-    return Math.abs(year - 1970);
+    return _calculateAge(Date.now(), dob)
 }
 
 export const convertSortValueTokey = (value: string) => {

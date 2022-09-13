@@ -1,5 +1,4 @@
 import { ApplicantType } from "../../types/types";
-import { calculateAge } from "../../controller/applicantController";
 import styles from "./ApplicantList.module.css";
 
 type ApplicantListItem = {
@@ -8,10 +7,16 @@ type ApplicantListItem = {
 
 export const getApplicantForKey = (key: string, applicant: ApplicantType) => {
     let applicantProperty = applicant[key as keyof ApplicantType];
-    if (!/birth_date/i.test(key)) return applicantProperty;
-
-    return calculateAge(String(applicantProperty));
+    if (!/birthDate/i.test(key)) return applicantProperty;
+    return applicant.age || applicant.birthDate;
 };
+
+/**
+ * Generate a key for the table cell
+ * @param key
+ * @param applicant
+ * @returns
+ */
 export const generateKey = (key: string, applicant: ApplicantType) =>
     key + getApplicantForKey(key, applicant);
 
