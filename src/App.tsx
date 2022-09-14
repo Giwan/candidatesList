@@ -47,6 +47,9 @@ function App() {
         }
     };
 
+    const handleKeyUp = (header: string) => (e: KeyboardEvent) =>
+        ["Space", "Enter"].includes(e.code) && handleClick(header)();
+
     return (
         <div className={styles.appContainer}>
             <Header />
@@ -54,6 +57,7 @@ function App() {
                 {...{
                     applicantList: candidates,
                     handleClick,
+                    handleKeyUp,
                     sortKey: convertSortKey(searchParams.get("sort")),
                     sortDirection: convertSortDirection(
                         searchParams.get("sortDirection")

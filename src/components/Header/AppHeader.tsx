@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Header = () => (
     <header className={styles.headerContainer}>
-        <h1 className={styles.title}>
-            <Link to="/">Applicants</Link>
-        </h1>
+        <Link className={styles.title} to="/" aria-label="Homepage">
+            Applicants
+        </Link>
         <Filter />
     </header>
 );

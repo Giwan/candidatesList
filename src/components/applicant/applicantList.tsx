@@ -13,6 +13,7 @@ export const tableHeader = [...Object.values(tableHeaderConstants)];
 export type ApplicantListProps = {
     applicantList: ApplicantType[];
     handleClick: Function;
+    handleKeyUp: Function;
     sortDirection: boolean;
     sortKey: string;
 };
@@ -20,6 +21,7 @@ export type ApplicantListProps = {
 const ApplicantList = ({
     applicantList,
     handleClick,
+    handleKeyUp,
     sortKey,
     sortDirection,
 }: ApplicantListProps) => {
@@ -39,8 +41,10 @@ const ApplicantList = ({
                         <th
                             key={header}
                             onClick={handleClick(header)}
+                            onKeyUp={handleKeyUp(header)}
                             data-can-sort={canSort(header)}
                             data-is-sort={identifySortKey(sortKey, header)}
+                            tabIndex={canSort(header) ? 0 : -1}
                         >
                             {header}
                         </th>
