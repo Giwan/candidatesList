@@ -30,6 +30,11 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.applicantTableRow th[data-can-sort="false"] {
+    outline: none;
+}
+
 .applicantTableRow th[data-is-sort="true"] {
     color: var(--color-accent);
 }

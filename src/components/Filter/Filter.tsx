@@ -9,6 +9,7 @@ import { useAppDispatch } from "../../hooks/hooks";
 import SelectFilter from "./SelectFilter";
 import { filterApplicants } from "../../controller/applicantController";
 import styles from "./Filter.module.css";
+import ClearFilterComponent from "./clearFilter";
 
 const statusFilterOptionsList = ["Approved", "Reject", "Waiting"];
 
@@ -60,6 +61,7 @@ const Filter = () => {
         dispatch(clearFilters());
         navigate("/");
     };
+
     return (
         <form onSubmit={applyFilters} className={styles.filterContainer}>
             <label htmlFor="nameFilter">
@@ -91,9 +93,7 @@ const Filter = () => {
                 }}
             />
             <button type="submit">Apply filters</button>
-            <button type="reset" onClick={clearFilter}>
-                Clear filters
-            </button>
+            <ClearFilterComponent {...{ clearFilter }} />
         </form>
     );
 };

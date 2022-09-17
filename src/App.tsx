@@ -51,7 +51,7 @@ function App() {
         ["Space", "Enter"].includes(e.code) && handleClick(header)();
 
     return (
-        <div className={styles.appContainer}>
+        <div className={styles.appContainer} tabIndex={-1}>
             <Header />
             <ApplicantList
                 {...{
