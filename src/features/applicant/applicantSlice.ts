@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getPositionOptions } from '../../controller/applicantController';
 import { RootState } from '../../store/store';
 import { InitialStateType } from '../../types/types';
+import { sortApplicants, convertSortKey, convertSortDirection } from '../../controller/sortController';
 
 const initialState: InitialStateType = {
     applicantList: undefined,
@@ -73,10 +74,18 @@ export default applicantSlice.reducer;
 export const applicantListSelector = (state: RootState) => {
     return state?.applicantReducer?.applicantList || [];
 }
-export const applicantFilteredListSelector = (state: RootState) => {
-    return state?.applicantReducer?.applicantFilteredList
+export const applicantFilteredListSelector = (searchParams: URLSearchParams) => (state: RootState) => {
+
+    const _list = state?.applicantReducer?.applicantFilteredList
         || state?.applicantReducer?.applicantList
         || [];
+
+    return sortApplicants(
+        convertSortKey(searchParams.get("sort")),
+        _list,
+        convertSortDirection(searchParams.get("sortDirection"))
+    )
+
 }
 export const errorSelector = (state: RootState) => state?.applicantReducer?.error;
 

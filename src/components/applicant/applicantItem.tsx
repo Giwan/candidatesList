@@ -1,14 +1,15 @@
 import { ApplicantType } from "../../types/types";
 import styles from "./ApplicantList.module.css";
+import { calculateAge } from "../../controller/applicantController";
 
 type ApplicantListItem = {
     applicant: ApplicantType;
 };
 
 export const getApplicantForKey = (key: string, applicant: ApplicantType) => {
-    let applicantProperty = applicant[key as keyof ApplicantType];
-    if (!/birthDate/i.test(key)) return applicantProperty;
-    return applicant.age || applicant.birthDate;
+    const applicantProperty = applicant[key as keyof ApplicantType];
+    if (!/dob/i.test(key)) return applicantProperty;
+    return calculateAge(applicant.dob);
 };
 
 /**

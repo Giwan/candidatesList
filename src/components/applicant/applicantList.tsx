@@ -1,11 +1,7 @@
 import { ApplicantType } from "../../types/types";
 import ApplicantItem from "./ApplicantItem";
 import { tableHeaderConstants } from "../../utils/constants";
-import {
-    sortApplicants,
-    identifySortKey,
-    canSort,
-} from "../../controller/sortController";
+import { identifySortKey, canSort } from "../../controller/sortController";
 import styles from "./ApplicantList.module.css";
 
 export const tableHeader = [...Object.values(tableHeaderConstants)];
@@ -27,12 +23,6 @@ const ApplicantList = ({
 }: ApplicantListProps) => {
     if (!applicantList || applicantList.length < 1) return null;
 
-    const _sortedApplicants = sortApplicants(
-        sortKey,
-        applicantList,
-        sortDirection
-    );
-
     return (
         <table className={styles.applicantTable}>
             <thead>
@@ -52,7 +42,7 @@ const ApplicantList = ({
                 </tr>
             </thead>
             <tbody className={styles.tbody}>
-                {_sortedApplicants.map((applicant, index) => (
+                {applicantList.map((applicant, index) => (
                     <ApplicantItem
                         key={applicant.email}
                         {...{ applicant, index }}

@@ -10,6 +10,10 @@ import {
 import { applicantFilteredListSelector } from "./features/applicant/applicantSlice";
 import { sortHeaders } from "./utils/constants";
 import { useSearchParams } from "react-router-dom";
+import {
+    convertSortKey,
+    convertSortDirection,
+} from "./controller/sortController";
 
 /**
  * Check which d
@@ -20,16 +24,13 @@ const toggleSortDirection = (function () {
     return () => String((_direction = !_direction));
 })();
 
-const convertSortDirection = (val: string | undefined | null): boolean =>
-    Boolean(!val || val === "false");
-
-const convertSortKey = (val: unknown): string => (!val ? "" : String(val));
-
 function App() {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParam] = useSearchParams();
 
-    const candidates = useAppSelector(applicantFilteredListSelector);
+    const applicantList = useAppSelector(
+        applicantFilteredListSelector(searchParams)
+    );
 
     useEffect(() => {
         dispatch(fetchApplicantList());
@@ -55,7 +56,7 @@ function App() {
             <Header />
             <ApplicantList
                 {...{
-                    applicantList: candidates,
+                    applicantList,
                     handleClick,
                     handleKeyUp,
                     sortKey: convertSortKey(searchParams.get("sort")),

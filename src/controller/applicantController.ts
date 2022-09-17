@@ -46,11 +46,11 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
 
     const clearLoading = () => dispatch(setIsLoading(false));
     const list = await networkFetchApplicantList(handleError, clearLoading);
-    const updatedList = list.map((item: ApplicantType) => ({
-        ...item,
-        birthDate: calculateAge(item.birthDate)
-    }))
-    dispatch(setApplicantList(updatedList));
+    // const updatedList = list.candidates.map((item: ApplicantType) => ({
+    //     ...item,
+    //     birthDate: calculateAge(item.birthDate)
+    // }))
+    dispatch(setApplicantList(list.candidates));
 }
 
 export const filterApplicants = (searchParams: URLSearchParams, filters: FiltersType) => (dispatch: Function, getState: Function) => {
@@ -108,11 +108,6 @@ export const convertSortValueTokey = (value: string) => {
 }
 
 export const getPositionOptions = (list: ApplicantType[]) => {
-    // return list.reduce((previous, current) => {
-    //     previous.add(String(current.position));
-    //     return previous;
-    // }, new Set())
-
     return list.reduce((previous, current) => {
         if (!previous.includes(current.position)) previous.push(current.position);
         return previous;

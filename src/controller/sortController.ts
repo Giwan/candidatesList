@@ -29,10 +29,12 @@ export const sortPosition = (direction: boolean) => (a: ApplicantType, b: Applic
 
 export const _sortDate = (dir: boolean) => (d1: string, d2: string) => {
     const _d1 = +new Date(d1), _d2 = +new Date(d2);
-    return _d1 === _d2
+    const result = _d1 === _d2
         ? 0 : _d1 > _d2
             ? dir ? 1 : -1
             : dir ? -1 : 1;
+
+    return result;
 }
 
 /**
@@ -69,3 +71,7 @@ export const sortApplicants = (key: string | undefined | null, list: ApplicantTy
 
 export const identifySortKey = (sortKey: string, header: string) => sortKey && new RegExp(sortKey, "i").test(convertSortValueTokey(header));
 export const canSort = (header: string) => sortHeaders.includes(header);
+
+export const convertSortKey = (val: unknown): string => (!val ? "" : String(val));
+export const convertSortDirection = (val: string | undefined | null): boolean =>
+    Boolean(!val || val === "false");

@@ -8,7 +8,7 @@ export type ApplicantType = {
     firstName: string;
     lastName: string;
     email: string;
-    birthDate: string;
+    dob: string;
     age?: number;
     experience: number;
     position: string;
