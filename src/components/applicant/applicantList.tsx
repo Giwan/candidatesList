@@ -44,7 +44,7 @@ const ApplicantList = ({
             <tbody className={styles.tbody}>
                 {applicantList.map((applicant, index) => (
                     <ApplicantItem
-                        key={applicant.email}
+                        key={applicant.email + applicant.lastName}
                         {...{ applicant, index }}
                     />
                 ))}
