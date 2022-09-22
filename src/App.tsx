@@ -1,13 +1,16 @@
 import styles from "./app.module.css";
 import ApplicantList from "./components/applicant/ApplicantList";
 import Header from "./components/Header/AppHeader";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks/hooks";
 import {
     fetchApplicantList,
     convertSortValueTokey,
 } from "./controller/applicantController";
-import { applicantFilteredListSelector } from "./features/applicant/applicantSlice";
+import {
+    applicantFilteredListSelector,
+    errorSelector,
+} from "./features/applicant/applicantSlice";
 import { sortHeaders } from "./utils/constants";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -27,14 +30,21 @@ const toggleSortDirection = (function () {
 function App() {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParam] = useSearchParams();
+    const hasError = useAppSelector(errorSelector);
 
     const applicantList = useAppSelector(
         applicantFilteredListSelector(searchParams)
     );
 
+    const _fetchApplicants = useCallback(
+        () => dispatch(fetchApplicantList()),
+        [dispatch]
+    );
+    const refreshClick = () => _fetchApplicants();
+
     useEffect(() => {
-        dispatch(fetchApplicantList());
-    }, [dispatch]);
+        _fetchApplicants();
+    }, []);
 
     const handleClick = (header: string) => () => {
         if (sortHeaders.includes(header)) {
@@ -50,6 +60,15 @@ function App() {
 
     const handleKeyUp = (header: string) => (e: KeyboardEvent) =>
         ["Space", "Enter"].includes(e.code) && handleClick(header)();
+
+    if (hasError) {
+        return (
+            <div className={styles.appErrorContainer} tabIndex={-1}>
+                <p>Failed to load applicants data. </p>
+                <button onClick={refreshClick}>Click here to try again</button>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.appContainer} tabIndex={-1}>

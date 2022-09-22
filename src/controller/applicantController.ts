@@ -46,11 +46,7 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
 
     const clearLoading = () => dispatch(setIsLoading(false));
     const list = await networkFetchApplicantList(handleError, clearLoading);
-    // const updatedList = list.candidates.map((item: ApplicantType) => ({
-    //     ...item,
-    //     birthDate: calculateAge(item.birthDate)
-    // }))
-    dispatch(setApplicantList(list.candidates));
+    list && dispatch(setApplicantList(list?.candidates));
 }
 
 export const filterApplicants = (searchParams: URLSearchParams, filters: FiltersType) => (dispatch: Function, getState: Function) => {
