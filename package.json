@@ -42,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "casual": "^1.6.2",
+    "moment": "^2.29.4"
   }
 }
