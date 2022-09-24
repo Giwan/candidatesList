@@ -40,8 +40,7 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
 
     const handleError = (error: Error | unknown) => dispatch(setError({
         title: "Failed to load applicants",
-        //@ts-ignore
-        error: error?.message || error
+        error
     }));
 
     const clearLoading = () => dispatch(setIsLoading(false));
