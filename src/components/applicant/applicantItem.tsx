@@ -1,6 +1,5 @@
 import { ApplicantType } from "../../types/types";
 import styles from "./ApplicantList.module.css";
-import { calculateAge } from "../../controller/applicantController";
 
 type ApplicantListItem = {
     applicant: ApplicantType;
