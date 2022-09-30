@@ -6,35 +6,31 @@ import { convertSortValueTokey } from "./applicantController";
  * Sort the list based on the years of experience
  */
 export const sortYears = (direction: boolean) => (a: ApplicantType, b: ApplicantType) => {
-    return direction
-        ? b.experience > a.experience ? -1 : 1
-        : a.experience > b.experience ? -1 : 1
+    const [_a, _b] = direction ? [a, b] : [b, a];
+    return _a.experience > _b.experience ? -1 : 1;
 };
 
-export const sortPositionLogic = (direction: boolean, pa: string, pb: string) => pa === pb
-    ? 0
-    : pa < pb
-        ? direction ? 1 : -1
-        : direction ? -1 : 1;
+export const sortPositionLogic = (direction: boolean, pa: string, pb: string) => {
+    if (pa === pb) return 0;
+    const [_pa, _pb] = direction ? [pa, pb] : [pb, pa];
+    return _pa < _pb ? 1 : -1;
+}
 
 /**
  * Sort the list based on the position they applied for
  */
 export const sortPosition = (direction: boolean) => (a: ApplicantType, b: ApplicantType) => {
-    const pa = a.position.toLowerCase();
-    const pb = b.position.toLowerCase();
-
+    const [pa, pb] = [a, b].map(x => x.position.toLowerCase());
     return sortPositionLogic(direction, pa, pb);
 }
 
 export const _sortDate = (dir: boolean) => (d1: string, d2: string) => {
     const _d1 = +new Date(d1), _d2 = +new Date(d2);
-    const result = _d1 === _d2
-        ? 0 : _d1 > _d2
-            ? dir ? 1 : -1
-            : dir ? -1 : 1;
+    if (_d1 === _d2) return 0;
 
-    return result;
+    // reverse the dates based on the direction
+    const [_dd1, _dd2] = dir ? [_d1, _d2] : [_d2, _d1];
+    return _dd1 > _dd2 ? 1 : -1;
 }
 
 /**

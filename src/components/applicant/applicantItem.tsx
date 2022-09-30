@@ -7,9 +7,7 @@ type ApplicantListItem = {
 };
 
 export const getApplicantForKey = (key: string, applicant: ApplicantType) => {
-    const applicantProperty = applicant[key as keyof ApplicantType];
-    if (!/dob/i.test(key)) return applicantProperty;
-    return calculateAge(applicant.dob);
+    return applicant[key as keyof ApplicantType];
 };
 
 /**

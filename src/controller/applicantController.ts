@@ -45,7 +45,11 @@ export const fetchApplicantList = ({ force = false } = {}) => async function (di
 
     const clearLoading = () => dispatch(setIsLoading(false));
     const list = await networkFetchApplicantList(handleError, clearLoading);
-    list && dispatch(setApplicantList(list?.candidates));
+    const candidates = list?.candidates.map((item: ApplicantType) => ({
+        ...item,
+        dob: calculateAge(item.dob)
+    }))
+    dispatch(setApplicantList(candidates));
 }
 
 export const filterApplicants = (searchParams: URLSearchParams, filters: FiltersType) => (dispatch: Function, getState: Function) => {
@@ -92,7 +96,7 @@ export const _calculateAge = (currentDate: number, dob: string) => {
 }
 
 export const calculateAge = (dob: string) => {
-    return _calculateAge(Date.now(), dob)
+    return _calculateAge(Date.now(), dob);
 }
 
 export const convertSortValueTokey = (value: string) => {
