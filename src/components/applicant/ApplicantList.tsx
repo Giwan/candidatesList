@@ -1,5 +1,5 @@
 import { ApplicantType } from "../../types/types";
-import ApplicantItem from "./ApplicantItem";
+import ApplicantItem from "./applicantItem";
 import { tableHeaderConstants } from "../../utils/constants";
 import { identifySortKey, canSort } from "../../controller/sortController";
 import styles from "./ApplicantList.module.css";
