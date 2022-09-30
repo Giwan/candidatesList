@@ -44,7 +44,7 @@ function App() {
 
     useEffect(() => {
         _fetchApplicants();
-    }, []);
+    }, [_fetchApplicants]);
 
     const handleClick = (header: string) => () => {
         if (sortHeaders.includes(header)) {
